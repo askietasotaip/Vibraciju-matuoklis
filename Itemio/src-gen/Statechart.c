@@ -17,6 +17,7 @@ Implementation of the state machine 'Statechart'
 /* prototypes of all internal functions */
 static void enact_main_region_ReadI2C(Statechart* handle);
 static void enact_main_region_DisplayData(Statechart* handle);
+static void exact_main_region_ReadI2C(Statechart* handle);
 static void exact_main_region_DisplayData(Statechart* handle);
 static void enseq_main_region_WaitSamplePeriod_default(Statechart* handle);
 static void enseq_main_region_ReadI2C_default(Statechart* handle);
@@ -268,6 +269,13 @@ static void enact_main_region_DisplayData(Statechart* handle)
 	handle->completed = bool_true;
 }
 
+/* Exit action for state 'ReadI2C'. */
+static void exact_main_region_ReadI2C(Statechart* handle)
+{
+	/* Exit action for state 'ReadI2C'. */
+	statechart_internal_set_sample_no(handle, (handle->internal.sample_no + 1));
+}
+
 /* Exit action for state 'DisplayData'. */
 static void exact_main_region_DisplayData(Statechart* handle)
 {
@@ -317,6 +325,7 @@ static void exseq_main_region_ReadI2C(Statechart* handle)
 {
 	/* Default exit sequence for state ReadI2C */
 	handle->stateConfVector[0] = Statechart_last_state;
+	exact_main_region_ReadI2C(handle);
 }
 
 /* Default exit sequence for state DisplayData */
@@ -403,13 +412,13 @@ static sc_integer main_region_ReadI2C_react(Statechart* handle, const sc_integer
 	{ 
 		/* Default exit sequence for state ReadI2C */
 		handle->stateConfVector[0] = Statechart_last_state;
+		exact_main_region_ReadI2C(handle);
 		/* The reactions of state null. */
-		if ((handle->internal.sample_no) == (9))
+		if ((handle->internal.sample_no) == (10))
 		{ 
 			enseq_main_region_DisplayData_default(handle);
 		}  else
 		{
-			statechart_internal_set_sample_no(handle, (handle->internal.sample_no + 1));
 			enseq_main_region_WaitSamplePeriod_default(handle);
 		}
 	}  else

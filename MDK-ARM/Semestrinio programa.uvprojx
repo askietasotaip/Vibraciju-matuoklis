@@ -314,7 +314,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>4</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32L073xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32L0xx_HAL_Driver/Inc;../Drivers/STM32L0xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32L0xx/Include;../Drivers/CMSIS/Include;../Itemio/src-gen;../Itemio/src</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32L0xx_HAL_Driver/Inc;../Drivers/STM32L0xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32L0xx/Include;../Drivers/CMSIS/Include;../Itemio/src-gen;../Itemio/src;..\MDK-ARM</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -408,6 +408,11 @@
               <FileName>stm32l0xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32l0xx_hal_msp.c</FilePath>
+            </File>
+            <File>
+              <FileName>mano.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\mano.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -513,16 +518,6 @@
               <FileName>system_stm32l0xx.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/system_stm32l0xx.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>FSmachine</GroupName>
-          <Files>
-            <File>
-              <FileName>Statechart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Itemio\src-gen\Statechart.c</FilePath>
             </File>
           </Files>
         </Group>

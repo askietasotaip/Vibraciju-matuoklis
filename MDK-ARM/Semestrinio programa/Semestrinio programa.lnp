@@ -22,7 +22,6 @@
 "semestrinio programa\stm32l0xx_hal_uart.o"
 "semestrinio programa\stm32l0xx_hal_uart_ex.o"
 "semestrinio programa\system_stm32l0xx.o"
-"semestrinio programa\statechart.o"
 "semestrinio programa\fonts.o"
 "semestrinio programa\ssd1306.o"
 --strict --scatter "Semestrinio programa\Semestrinio programa.sct"

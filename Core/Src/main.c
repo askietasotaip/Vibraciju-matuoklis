@@ -21,9 +21,11 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "Statechart.h"
-#include "Statechart_required.h"
-
+//#include "Statechart.h"
+//#include "Statechart_required.h"
+#include "math.h"
+//#include "sc_types.h"
+//#include "EventRecorder.h" 
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -34,6 +36,15 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define adxl_address 0x53<<1
+#define bufferlen 10
+
+#define EVENT_ENTER_ID					0x1
+#define EVENT_GOSLEEP_ID	  		0x2
+#define EVENT_TIMER_ID		  		0x3
+#define EVENT_ADC_ID			  		0x4
+#define EVENT_DISPLAY_END_ID	  0x5
+
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -43,9 +54,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 I2C_HandleTypeDef hi2c1;
-I2C_HandleTypeDef hi2c3;
 
-TIM_HandleTypeDef htim2;
+TIM_HandleTypeDef htim6;
 
 UART_HandleTypeDef huart4;
 
@@ -54,7 +64,13 @@ uint8_t data_rec[6];
 uint8_t chipid=0;
 int16_t x,y,z;
 float xg, yg, zg;
-char x_char[3], y_char[3], z_char[3];
+char x_char[3], y_char[3], z_char[3], g=0;
+float DataBufferX[bufferlen];
+float DataBufferY[bufferlen];
+float DataBufferZ[bufferlen];
+float RMSX, RMSY, RMSZ;
+
+//Statechart sc_handle;
 
 /* USER CODE END PV */
 
@@ -62,15 +78,16 @@ char x_char[3], y_char[3], z_char[3];
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_I2C1_Init(void);
-static void MX_I2C3_Init(void);
 static void MX_USART4_UART_Init(void);
-static void MX_TIM2_Init(void);
+static void MX_TIM6_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+int cnt;
+int sample_no=0;
 void adxl_write (uint8_t reg, uint8_t value)
 {
 	uint8_t data[2];
@@ -101,22 +118,59 @@ void adxl_init (void)
 
 }
 
-void statechart_readI2CSensor( Statechart* handle)
+void ReadI2CSensor()
 {
+							adxl_read_values (0x32);
+	  x = ((data_rec[1]<<8)|data_rec[0]);
+	  y = ((data_rec[3]<<8)|data_rec[2]);
+	  z = ((data_rec[5]<<8)|data_rec[4]);
+
+	  xg = fabs(x * .0078);
+	  yg = fabs(y * .0078);
+	  zg = fabs(z * .0078);
 }
 
-sc_integer statechart_saveI2CSample( Statechart* handle, const sc_integer sample_no)
-{
+void saveI2CSample()
+{	
+	DataBufferX[sample_no]=xg;
+	DataBufferY[sample_no]=yg;
+	DataBufferZ[sample_no]=zg;
+	sample_no+=1;
 }
 
-void statechart_processData( Statechart* handle)
+void ProcessData()
 {
+	int i;
+	float sumX, sumY, sumZ;
+	
+	sumX=0;
+	sumY=0;
+	sumZ=0;
+	
+	for(int i=0;i<bufferlen;i++)
+	{
+		sumX+=pow(DataBufferX[i],2);
+		sumY+=pow(DataBufferY[i],2);
+		sumZ+=pow(DataBufferZ[i],2);
+	}
+	
+	RMSX=sqrt(sumX/bufferlen);
+	RMSY=sqrt(sumY/bufferlen);
+	RMSZ=sqrt(sumZ/bufferlen);
 }
 
-void statechart_displayInfo( Statechart* handle)
+/*void statechart_displayInfo( Statechart* handle)
 {
 }
+*/
+/*void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
 
+		statechart_raise_getSample(&sc_handle); //raise event TimerIntr in statechart	
+		HAL_NVIC_EnableIRQ(EXTI0_1_IRQn);
+	
+}
+*/
 /* USER CODE END 0 */
 
 /**
@@ -148,30 +202,44 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_I2C1_Init();
-  MX_I2C3_Init();
   MX_USART4_UART_Init();
-  MX_TIM2_Init();
+  MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
 adxl_init();  // initialize adxl
+
+		if(HAL_TIM_Base_Start_IT(&htim6) != HAL_OK) //run TIM6 timer
+    {
+    g=5;
+     }
+
+//statechart_init(&sc_handle); //inicializuoti busenu automata
+//statechart_enter(&sc_handle); //pradeti vykdyti busenu automata
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-						adxl_read_values (0x32);
-	  x = ((data_rec[1]<<8)|data_rec[0]);
-	  y = ((data_rec[3]<<8)|data_rec[2]);
-	  z = ((data_rec[5]<<8)|data_rec[4]);
 
-	  xg = x * .0078;
-	  yg = y * .0078;
-	  zg = z * .0078;
-		HAL_Delay(10);   
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+		if (cnt==200)
+		{
+			ReadI2CSensor();
+			saveI2CSample();
+			cnt=0;
+			
+			if (sample_no==10)
+			{
+				ProcessData();
+				sample_no=0;
+			}
+		}
   }
+	//statechart_exit(&sc_handle);
   /* USER CODE END 3 */
 }
 
@@ -217,9 +285,8 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_I2C1|RCC_PERIPHCLK_I2C3;
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_I2C1;
   PeriphClkInit.I2c1ClockSelection = RCC_I2C1CLKSOURCE_PCLK1;
-  PeriphClkInit.I2c3ClockSelection = RCC_I2C3CLKSOURCE_PCLK1;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
@@ -275,95 +342,40 @@ static void MX_I2C1_Init(void)
 }
 
 /**
-  * @brief I2C3 Initialization Function
+  * @brief TIM6 Initialization Function
   * @param None
   * @retval None
   */
-static void MX_I2C3_Init(void)
+static void MX_TIM6_Init(void)
 {
 
-  /* USER CODE BEGIN I2C3_Init 0 */
+  /* USER CODE BEGIN TIM6_Init 0 */
 
-  /* USER CODE END I2C3_Init 0 */
+  /* USER CODE END TIM6_Init 0 */
 
-  /* USER CODE BEGIN I2C3_Init 1 */
-
-  /* USER CODE END I2C3_Init 1 */
-  hi2c3.Instance = I2C3;
-  hi2c3.Init.Timing = 0x00506682;
-  hi2c3.Init.OwnAddress1 = 0;
-  hi2c3.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-  hi2c3.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-  hi2c3.Init.OwnAddress2 = 0;
-  hi2c3.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
-  hi2c3.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-  hi2c3.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
-  if (HAL_I2C_Init(&hi2c3) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  /** Configure Analogue filter
-  */
-  if (HAL_I2CEx_ConfigAnalogFilter(&hi2c3, I2C_ANALOGFILTER_ENABLE) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  /** Configure Digital filter
-  */
-  if (HAL_I2CEx_ConfigDigitalFilter(&hi2c3, 0) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN I2C3_Init 2 */
-
-  /* USER CODE END I2C3_Init 2 */
-
-}
-
-/**
-  * @brief TIM2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_TIM2_Init(void)
-{
-
-  /* USER CODE BEGIN TIM2_Init 0 */
-
-  /* USER CODE END TIM2_Init 0 */
-
-  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
   TIM_MasterConfigTypeDef sMasterConfig = {0};
 
-  /* USER CODE BEGIN TIM2_Init 1 */
+  /* USER CODE BEGIN TIM6_Init 1 */
 
-  /* USER CODE END TIM2_Init 1 */
-  htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 8000;
-  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 600;
-  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
+  /* USER CODE END TIM6_Init 1 */
+  htim6.Instance = TIM6;
+  htim6.Init.Prescaler = 24000;
+  htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim6.Init.Period = 500;
+  htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
+  if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {
     Error_Handler();
   }
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim6, &sMasterConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN TIM2_Init 2 */
+  /* USER CODE BEGIN TIM6_Init 2 */
 
-  /* USER CODE END TIM2_Init 2 */
+  /* USER CODE END TIM6_Init 2 */
 
 }
 
@@ -409,13 +421,23 @@ static void MX_USART4_UART_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
 /* USER CODE BEGIN MX_GPIO_Init_1 */
 /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
+
+  /*Configure GPIO pins : PC0 PC1 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Alternate = GPIO_AF7_I2C3;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */

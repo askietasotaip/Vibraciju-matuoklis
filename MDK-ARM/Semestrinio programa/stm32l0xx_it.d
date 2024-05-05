@@ -33,4 +33,4 @@ semestrinio\ programa/stm32l0xx_it.o: ..\Core\Src\stm32l0xx_it.c \
   ..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_hal_tim_ex.h \
   ..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_hal_uart.h \
   ..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_hal_uart_ex.h \
-  ..\Core\Inc\stm32l0xx_it.h
+  ..\Core\Inc\stm32l0xx_it.h ..\MDK-ARM\mano.h
