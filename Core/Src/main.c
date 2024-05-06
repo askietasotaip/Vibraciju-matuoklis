@@ -24,7 +24,7 @@
 #include "math.h"
 #include "ssd1306.h"
 #include "fonts.h"
-#include <stdio.h>  // funkcijai sprintf
+#include <stdio.h> 
 #include "mano.h"
 /* USER CODE END Includes */
 
@@ -37,10 +37,7 @@
 /* USER CODE BEGIN PD */
 #define adxl_address 0x53<<1
 #define bufferlen 10
-
-
-
-
+#define acc_range 2
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -85,6 +82,9 @@ static void MX_TIM6_Init(void);
 uint8_t TxBuffer[60];
 int cnt=0;
 int sample_no=0;
+int range=0;
+float divider=0;
+
 void adxl_write (uint8_t reg, uint8_t value)
 {
 	uint8_t data[2];
@@ -107,9 +107,34 @@ void adxl_read_address (uint8_t reg)
 
 void adxl_init (void)
 {
+	if(acc_range==2)
+	{
+		range=0x00;
+		divider=0.003906;
+	}
+	else if(acc_range==4)
+	{
+		range=0x01;
+		divider=0.0078125;
+	}
+	else if(acc_range==8)
+	{
+		range=0x10;
+		divider=0.01563;
+	}
+	else if(acc_range==16)
+	{
+		range=0x11;
+		divider=0.03125;
+	}	
+	else
+	{
+		range=0x00;
+		divider=0.003906;
+	}
 	adxl_read_address (0x00); // read the DEVID
 
-	adxl_write (0x31, 0x00);  // data_format range= +- 2g
+	adxl_write (0x31, range);  // data_format range= +- 2g
 	adxl_write (0x2d, 0x00);  // reset all bits
 	adxl_write (0x2d, 0x08);  // power_cntl measure and wake up 8hz
 
@@ -122,9 +147,9 @@ void ReadI2CSensor()
 	  y = ((data_rec[3]<<8)|data_rec[2]);
 	  z = ((data_rec[5]<<8)|data_rec[4]);
 
-	  xg = fabs(x * .003906);
-	  yg = fabs(y * .003906);
-	  zg = fabs(z * .003906);
+	  xg = x * divider;
+	  yg = y * divider;
+	  zg = z * divider;
 }
 
 void saveI2CSample()
@@ -232,9 +257,9 @@ int main(void)
   ssd1306_SetCursor(0, 12);
   		 
   // Copy all data from local screenbuffer to the screen
-   ssd1306_UpdateScreen(&hi2c1);
-	 #endif
-cnt=0;
+  ssd1306_UpdateScreen(&hi2c1);
+	#endif
+	cnt=0;
 
   /* USER CODE END 2 */
 
@@ -261,7 +286,6 @@ cnt=0;
 			}
 		}
   }
-	//statechart_exit(&sc_handle);
   /* USER CODE END 3 */
 }
 
