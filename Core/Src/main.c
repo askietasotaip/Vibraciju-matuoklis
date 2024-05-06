@@ -21,11 +21,11 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-//#include "Statechart.h"
-//#include "Statechart_required.h"
 #include "math.h"
-//#include "sc_types.h"
-//#include "EventRecorder.h" 
+#include "ssd1306.h"
+#include "fonts.h"
+#include <stdio.h>  // funkcijai sprintf
+#include "mano.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -86,7 +86,8 @@ static void MX_TIM6_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-int cnt;
+uint8_t TxBuffer[40];
+int cnt=0;
 int sample_no=0;
 void adxl_write (uint8_t reg, uint8_t value)
 {
@@ -112,7 +113,7 @@ void adxl_init (void)
 {
 	adxl_read_address (0x00); // read the DEVID
 
-	adxl_write (0x31, 0x01);  // data_format range= +- 4g
+	adxl_write (0x31, 0x00);  // data_format range= +- 2g
 	adxl_write (0x2d, 0x00);  // reset all bits
 	adxl_write (0x2d, 0x08);  // power_cntl measure and wake up 8hz
 
@@ -125,9 +126,9 @@ void ReadI2CSensor()
 	  y = ((data_rec[3]<<8)|data_rec[2]);
 	  z = ((data_rec[5]<<8)|data_rec[4]);
 
-	  xg = fabs(x * .0078);
-	  yg = fabs(y * .0078);
-	  zg = fabs(z * .0078);
+	  xg = fabs(x * .003906);
+	  yg = fabs(y * .003906);
+	  zg = fabs(z * .003906);
 }
 
 void saveI2CSample()
@@ -159,18 +160,38 @@ void ProcessData()
 	RMSZ=sqrt(sumZ/bufferlen);
 }
 
-/*void statechart_displayInfo( Statechart* handle)
-{
-}
-*/
-/*void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-
-		statechart_raise_getSample(&sc_handle); //raise event TimerIntr in statechart	
-		HAL_NVIC_EnableIRQ(EXTI0_1_IRQn);
+void DisplayInfo()
+{	
+	#ifndef DISABLE_DISPLAY
+	static char string_display[30];
+	
+	// Display I2C sensor redings
+	ssd1306_SetCursor(0, 0);
+	
+		
+	// Display analog sensors readings
+	ssd1306_SetCursor(0, 0); // ssd1306_SetCursor(0, 14);
+	sprintf(string_display,"Xrms=%.3f g    ",RMSX);
+	ssd1306_WriteString(string_display,Font_11x18, White);
+	ssd1306_SetCursor(0, 22); // ssd1306_SetCursor(0, 14);
+	sprintf(string_display,"Yrms=%.3f g    ",RMSY);
+	ssd1306_WriteString(string_display,Font_11x18, White);
+  ssd1306_SetCursor(0, 44); // ssd1306_SetCursor(0, 14);
+  sprintf(string_display,"Zrms=%.3f g    ",RMSZ);
+  ssd1306_WriteString(string_display,Font_11x18, White);
+	
+	// Copy all data from local screenbuffer to the screen
+  ssd1306_UpdateScreen(&hi2c1);
+	#endif
 	
 }
-*/
+
+void SendToPC()
+{
+	sprintf((char*) TxBuffer, " x = %.3f g \t y = %.3f \t z = %.3f", xg, yg, zg);
+	HAL_UART_Transmit(&huart4, TxBuffer, sizeof(TxBuffer), 100);
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -205,16 +226,19 @@ int main(void)
   MX_USART4_UART_Init();
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
-adxl_init();  // initialize adxl
-
-		if(HAL_TIM_Base_Start_IT(&htim6) != HAL_OK) //run TIM6 timer
-    {
-    g=5;
-     }
-
-//statechart_init(&sc_handle); //inicializuoti busenu automata
-//statechart_enter(&sc_handle); //pradeti vykdyti busenu automata
-
+	adxl_init();  // initialize adxl
+	#ifndef DISABLE_DISPLAY
+  // Init lcd using one of the stm32HAL i2c typedefs
+  ssd1306_Init(&hi2c1);
+  // Write data to local screenbuffer
+	ssd1306_SetCursor(0,0);
+  ssd1306_WriteString("Starting ...",Font_11x18, White);
+  ssd1306_SetCursor(0, 12);
+  		 
+  // Copy all data from local screenbuffer to the screen
+   ssd1306_UpdateScreen(&hi2c1);
+	 #endif
+cnt=0;
 
   /* USER CODE END 2 */
 
@@ -230,11 +254,13 @@ adxl_init();  // initialize adxl
 		{
 			ReadI2CSensor();
 			saveI2CSample();
+			SendToPC();
 			cnt=0;
 			
 			if (sample_no==10)
 			{
 				ProcessData();
+				DisplayInfo();
 				sample_no=0;
 			}
 		}
