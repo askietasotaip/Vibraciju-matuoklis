@@ -38,11 +38,7 @@
 #define adxl_address 0x53<<1
 #define bufferlen 10
 
-#define EVENT_ENTER_ID					0x1
-#define EVENT_GOSLEEP_ID	  		0x2
-#define EVENT_TIMER_ID		  		0x3
-#define EVENT_ADC_ID			  		0x4
-#define EVENT_DISPLAY_END_ID	  0x5
+
 
 
 /* USER CODE END PD */
@@ -171,13 +167,13 @@ void DisplayInfo()
 		
 	// Display analog sensors readings
 	ssd1306_SetCursor(0, 0); // ssd1306_SetCursor(0, 14);
-	sprintf(string_display,"Xrms=%.3f g    ",RMSX);
+	sprintf(string_display,"Xrms=%.3fg    ",RMSX);
 	ssd1306_WriteString(string_display,Font_11x18, White);
 	ssd1306_SetCursor(0, 22); // ssd1306_SetCursor(0, 14);
-	sprintf(string_display,"Yrms=%.3f g    ",RMSY);
+	sprintf(string_display,"Yrms=%.3fg    ",RMSY);
 	ssd1306_WriteString(string_display,Font_11x18, White);
   ssd1306_SetCursor(0, 44); // ssd1306_SetCursor(0, 14);
-  sprintf(string_display,"Zrms=%.3f g    ",RMSZ);
+  sprintf(string_display,"Zrms=%.3fg    ",RMSZ);
   ssd1306_WriteString(string_display,Font_11x18, White);
 	
 	// Copy all data from local screenbuffer to the screen
@@ -188,7 +184,7 @@ void DisplayInfo()
 
 void SendToPC()
 {
-	sprintf((char*) TxBuffer, "\n x = %.3f g \t y = %.3f \t z = %.3f ", xg, yg, zg);
+	sprintf((char*) TxBuffer, "\n x = %.3f g \t y = %.3f g \t z = %.3f g ", xg, yg, zg);
 	HAL_UART_Transmit(&huart4, TxBuffer, sizeof(TxBuffer), 100);
 }
 
