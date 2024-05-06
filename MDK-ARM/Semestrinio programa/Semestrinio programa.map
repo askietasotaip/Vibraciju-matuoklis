@@ -3995,7 +3995,7 @@ Image component sizes
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
          0          0       3420          8          0        902   fonts.o
-      1746        212         98          0        547      12098   main.o
+      1746        212         98          0        547      12084   main.o
       1240         12          0          0       1030       6115   ssd1306.o
         56         26        192          0       1536        644   startup_stm32l073xx.o
        272         28          0          5          4       6657   stm32l0xx_hal.o
@@ -4013,7 +4013,7 @@ Image component sizes
          2          0         33          4          0       1936   system_stm32l0xx.o
 
     ----------------------------------------------------------------------
-     16196        874       3776         20       3132     181216   Object Totals
+     16196        874       3776         20       3132     181202   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         14          0          1          3         15          0   (incl. Padding)
 
@@ -4149,8 +4149,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     30404       1444       4676         20       3228     184092   Grand Totals
-     30404       1444       4676         20       3228     184092   ELF Image Totals
+     30404       1444       4676         20       3228     184078   Grand Totals
+     30404       1444       4676         20       3228     184078   ELF Image Totals
      30404       1444       4676         20          0          0   ROM Totals
 
 ==============================================================================

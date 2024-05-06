@@ -142,14 +142,14 @@ void adxl_init (void)
 
 void ReadI2CSensor()
 {
-							adxl_read_values (0x32);
-	  x = ((data_rec[1]<<8)|data_rec[0]);
-	  y = ((data_rec[3]<<8)|data_rec[2]);
-	  z = ((data_rec[5]<<8)|data_rec[4]);
+	adxl_read_values (0x32);
+	x = ((data_rec[1]<<8)|data_rec[0]);
+	y = ((data_rec[3]<<8)|data_rec[2]);
+	z = ((data_rec[5]<<8)|data_rec[4]);
 
-	  xg = x * divider;
-	  yg = y * divider;
-	  zg = z * divider;
+	xg = x * divider;
+	yg = y * divider;
+	zg = z * divider;
 }
 
 void saveI2CSample()
@@ -189,7 +189,6 @@ void DisplayInfo()
 	// Display I2C sensor redings
 	ssd1306_SetCursor(0, 0);
 	
-		
 	// Display analog sensors readings
 	ssd1306_SetCursor(0, 0); // ssd1306_SetCursor(0, 14);
 	sprintf(string_display,"Xrms=%.3fg    ",RMSX);
