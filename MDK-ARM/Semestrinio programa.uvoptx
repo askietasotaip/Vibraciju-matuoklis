@@ -187,6 +187,11 @@
           <WinNumber>2</WinNumber>
           <ItemText>sample_no,0x0A</ItemText>
         </Ww>
+        <Ww>
+          <count>4</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>TxBuffer</ItemText>
+        </Ww>
       </WatchWindow2>
       <Tracepoint>
         <THDelay>0</THDelay>

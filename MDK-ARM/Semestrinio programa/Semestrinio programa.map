@@ -3257,17 +3257,17 @@ Image Symbol Table
     Font11x18                                0x080078f4   Data        3420  fonts.o(.rodata.Font11x18)
     [Anonymous Symbol]                       0x080078f4   Section        0  fonts.o(.rodata.Font11x18)
     [Anonymous Symbol]                       0x08008659   Section        0  main.o(.rodata.str1.1)
-    locale$$data                             0x080086d8   Section       28  lc_numeric_c.o(locale$$data)
-    __lcnum_c_name                           0x080086dc   Data           2  lc_numeric_c.o(locale$$data)
-    __lcnum_c_start                          0x080086e4   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_point                          0x080086f0   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_thousands                      0x080086f2   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_grouping                       0x080086f3   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_end                            0x080086f4   Data           0  lc_numeric_c.o(locale$$data)
-    locale$$data                             0x080086f4   Section      272  lc_ctype_c.o(locale$$data)
-    __lcctype_c_name                         0x080086f8   Data           2  lc_ctype_c.o(locale$$data)
-    __lcctype_c_start                        0x08008700   Data           0  lc_ctype_c.o(locale$$data)
-    __lcctype_c_end                          0x08008804   Data           0  lc_ctype_c.o(locale$$data)
+    locale$$data                             0x080086dc   Section       28  lc_numeric_c.o(locale$$data)
+    __lcnum_c_name                           0x080086e0   Data           2  lc_numeric_c.o(locale$$data)
+    __lcnum_c_start                          0x080086e8   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_point                          0x080086f4   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_thousands                      0x080086f6   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_grouping                       0x080086f7   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_end                            0x080086f8   Data           0  lc_numeric_c.o(locale$$data)
+    locale$$data                             0x080086f8   Section      272  lc_ctype_c.o(locale$$data)
+    __lcctype_c_name                         0x080086fc   Data           2  lc_ctype_c.o(locale$$data)
+    __lcctype_c_start                        0x08008704   Data           0  lc_ctype_c.o(locale$$data)
+    __lcctype_c_end                          0x08008808   Data           0  lc_ctype_c.o(locale$$data)
     .bss                                     0x20000018   Section       96  libspace.o(.bss)
     DisplayInfo.string_display               0x200000f0   Data          30  main.o(.bss.DisplayInfo.string_display)
     [Anonymous Symbol]                       0x200000f0   Section        0  main.o(.bss.DisplayInfo.string_display)
@@ -3275,11 +3275,11 @@ Image Symbol Table
     [Anonymous Symbol]                       0x2000011c   Section        0  ssd1306.o(.bss.SSD1306)
     SSD1306_Buffer                           0x20000122   Data        1024  ssd1306.o(.bss.SSD1306_Buffer)
     [Anonymous Symbol]                       0x20000122   Section        0  ssd1306.o(.bss.SSD1306_Buffer)
-    Heap_Mem                                 0x20000698   Data         512  startup_stm32l073xx.o(HEAP)
-    HEAP                                     0x20000698   Section      512  startup_stm32l073xx.o(HEAP)
-    Stack_Mem                                0x20000898   Data        1024  startup_stm32l073xx.o(STACK)
-    STACK                                    0x20000898   Section     1024  startup_stm32l073xx.o(STACK)
-    __initial_sp                             0x20000c98   Data           0  startup_stm32l073xx.o(STACK)
+    Heap_Mem                                 0x200006a8   Data         512  startup_stm32l073xx.o(HEAP)
+    HEAP                                     0x200006a8   Section      512  startup_stm32l073xx.o(HEAP)
+    Stack_Mem                                0x200008a8   Data        1024  startup_stm32l073xx.o(STACK)
+    STACK                                    0x200008a8   Section     1024  startup_stm32l073xx.o(STACK)
+    __initial_sp                             0x20000ca8   Data           0  startup_stm32l073xx.o(STACK)
 
     Global Symbols
 
@@ -3614,9 +3614,9 @@ Image Symbol Table
     AHBPrescTable                            0x080078dc   Data          16  system_stm32l0xx.o(.rodata.AHBPrescTable)
     APBPrescTable                            0x080078ec   Data           8  system_stm32l0xx.o(.rodata.APBPrescTable)
     PLLMulTable                              0x08008650   Data           9  system_stm32l0xx.o(.rodata.PLLMulTable)
-    Region$$Table$$Base                      0x080086b8   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x080086d8   Number         0  anon$$obj.o(Region$$Table)
-    __ctype                                  0x08008701   Data           0  lc_ctype_c.o(locale$$data)
+    Region$$Table$$Base                      0x080086bc   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x080086dc   Number         0  anon$$obj.o(Region$$Table)
+    __ctype                                  0x08008705   Data           0  lc_ctype_c.o(locale$$data)
     Font_11x18                               0x20000000   Data           8  fonts.o(.data.Font_11x18)
     SystemCoreClock                          0x20000008   Data           4  system_stm32l0xx.o(.data.SystemCoreClock)
     uwTickFreq                               0x2000000c   Data           1  stm32l0xx_hal.o(.data.uwTickFreq)
@@ -3629,21 +3629,21 @@ Image Symbol Table
     RMSX                                     0x20000110   Data           4  main.o(.bss.RMSX)
     RMSY                                     0x20000114   Data           4  main.o(.bss.RMSY)
     RMSZ                                     0x20000118   Data           4  main.o(.bss.RMSZ)
-    TxBuffer                                 0x20000522   Data          40  main.o(.bss.TxBuffer)
-    chipid                                   0x2000054a   Data           1  main.o(.bss.chipid)
-    cnt                                      0x2000054c   Data           4  main.o(.bss.cnt)
-    data_rec                                 0x20000550   Data           6  main.o(.bss.data_rec)
-    hi2c1                                    0x20000558   Data          84  main.o(.bss.hi2c1)
-    htim6                                    0x200005ac   Data          64  main.o(.bss.htim6)
-    huart4                                   0x200005ec   Data         136  main.o(.bss.huart4)
-    sample_no                                0x20000674   Data           4  main.o(.bss.sample_no)
-    uwTick                                   0x20000678   Data           4  stm32l0xx_hal.o(.bss.uwTick)
-    x                                        0x2000067c   Data           2  main.o(.bss.x)
-    xg                                       0x20000680   Data           4  main.o(.bss.xg)
-    y                                        0x20000684   Data           2  main.o(.bss.y)
-    yg                                       0x20000688   Data           4  main.o(.bss.yg)
-    z                                        0x2000068c   Data           2  main.o(.bss.z)
-    zg                                       0x20000690   Data           4  main.o(.bss.zg)
+    TxBuffer                                 0x20000522   Data          60  main.o(.bss.TxBuffer)
+    chipid                                   0x2000055e   Data           1  main.o(.bss.chipid)
+    cnt                                      0x20000560   Data           4  main.o(.bss.cnt)
+    data_rec                                 0x20000564   Data           6  main.o(.bss.data_rec)
+    hi2c1                                    0x2000056c   Data          84  main.o(.bss.hi2c1)
+    htim6                                    0x200005c0   Data          64  main.o(.bss.htim6)
+    huart4                                   0x20000600   Data         136  main.o(.bss.huart4)
+    sample_no                                0x20000688   Data           4  main.o(.bss.sample_no)
+    uwTick                                   0x2000068c   Data           4  stm32l0xx_hal.o(.bss.uwTick)
+    x                                        0x20000690   Data           2  main.o(.bss.x)
+    xg                                       0x20000694   Data           4  main.o(.bss.xg)
+    y                                        0x20000698   Data           2  main.o(.bss.y)
+    yg                                       0x2000069c   Data           4  main.o(.bss.yg)
+    z                                        0x200006a0   Data           2  main.o(.bss.z)
+    zg                                       0x200006a4   Data           4  main.o(.bss.zg)
 
 
 
@@ -3655,7 +3655,7 @@ Memory Map of the image
 
   Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00008820, Max: 0x00030000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x00008804, Max: 0x00030000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x00008808, Max: 0x00030000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -3915,13 +3915,14 @@ Memory Map of the image
     0x080078ec   0x080078ec   0x00000008   Data   RO         1203    .rodata.APBPrescTable  system_stm32l0xx.o
     0x080078f4   0x080078f4   0x00000d5c   Data   RO         1216    .rodata.Font11x18   fonts.o
     0x08008650   0x08008650   0x00000009   Data   RO         1204    .rodata.PLLMulTable  system_stm32l0xx.o
-    0x08008659   0x08008659   0x0000005f   Data   RO           62    .rodata.str1.1      main.o
-    0x080086b8   0x080086b8   0x00000020   Data   RO         1664    Region$$Table       anon$$obj.o
-    0x080086d8   0x080086d8   0x0000001c   Data   RO         1498    locale$$data        c_p.l(lc_numeric_c.o)
-    0x080086f4   0x080086f4   0x00000110   Data   RO         1526    locale$$data        c_p.l(lc_ctype_c.o)
+    0x08008659   0x08008659   0x00000061   Data   RO           62    .rodata.str1.1      main.o
+    0x080086ba   0x080086ba   0x00000002   PAD
+    0x080086bc   0x080086bc   0x00000020   Data   RO         1664    Region$$Table       anon$$obj.o
+    0x080086dc   0x080086dc   0x0000001c   Data   RO         1498    locale$$data        c_p.l(lc_numeric_c.o)
+    0x080086f8   0x080086f8   0x00000110   Data   RO         1526    locale$$data        c_p.l(lc_ctype_c.o)
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08008808, Size: 0x00000c98, Max: 0x00005000, ABSOLUTE)
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08008808, Size: 0x00000ca8, Max: 0x00005000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -3942,29 +3943,28 @@ Memory Map of the image
     0x20000118        -       0x00000004   Zero   RW           60    .bss.RMSZ           main.o
     0x2000011c        -       0x00000006   Zero   RW         1241    .bss.SSD1306        ssd1306.o
     0x20000122        -       0x00000400   Zero   RW         1242    .bss.SSD1306_Buffer  ssd1306.o
-    0x20000522        -       0x00000028   Zero   RW           63    .bss.TxBuffer       main.o
-    0x2000054a        -       0x00000001   Zero   RW           43    .bss.chipid         main.o
-    0x2000054b   0x0800881c   0x00000001   PAD
-    0x2000054c        -       0x00000004   Zero   RW           45    .bss.cnt            main.o
-    0x20000550        -       0x00000006   Zero   RW           48    .bss.data_rec       main.o
-    0x20000556   0x0800881c   0x00000002   PAD
-    0x20000558        -       0x00000054   Zero   RW           47    .bss.hi2c1          main.o
-    0x200005ac        -       0x00000040   Zero   RW           65    .bss.htim6          main.o
-    0x200005ec        -       0x00000088   Zero   RW           64    .bss.huart4         main.o
-    0x20000674        -       0x00000004   Zero   RW           46    .bss.sample_no      main.o
-    0x20000678        -       0x00000004   Zero   RW          367    .bss.uwTick         stm32l0xx_hal.o
-    0x2000067c        -       0x00000002   Zero   RW           49    .bss.x              main.o
-    0x2000067e   0x0800881c   0x00000002   PAD
-    0x20000680        -       0x00000004   Zero   RW           52    .bss.xg             main.o
-    0x20000684        -       0x00000002   Zero   RW           50    .bss.y              main.o
-    0x20000686   0x0800881c   0x00000002   PAD
-    0x20000688        -       0x00000004   Zero   RW           53    .bss.yg             main.o
-    0x2000068c        -       0x00000002   Zero   RW           51    .bss.z              main.o
-    0x2000068e   0x0800881c   0x00000002   PAD
-    0x20000690        -       0x00000004   Zero   RW           54    .bss.zg             main.o
-    0x20000694   0x0800881c   0x00000004   PAD
-    0x20000698        -       0x00000200   Zero   RW            2    HEAP                startup_stm32l073xx.o
-    0x20000898        -       0x00000400   Zero   RW            1    STACK               startup_stm32l073xx.o
+    0x20000522        -       0x0000003c   Zero   RW           63    .bss.TxBuffer       main.o
+    0x2000055e        -       0x00000001   Zero   RW           43    .bss.chipid         main.o
+    0x2000055f   0x0800881c   0x00000001   PAD
+    0x20000560        -       0x00000004   Zero   RW           45    .bss.cnt            main.o
+    0x20000564        -       0x00000006   Zero   RW           48    .bss.data_rec       main.o
+    0x2000056a   0x0800881c   0x00000002   PAD
+    0x2000056c        -       0x00000054   Zero   RW           47    .bss.hi2c1          main.o
+    0x200005c0        -       0x00000040   Zero   RW           65    .bss.htim6          main.o
+    0x20000600        -       0x00000088   Zero   RW           64    .bss.huart4         main.o
+    0x20000688        -       0x00000004   Zero   RW           46    .bss.sample_no      main.o
+    0x2000068c        -       0x00000004   Zero   RW          367    .bss.uwTick         stm32l0xx_hal.o
+    0x20000690        -       0x00000002   Zero   RW           49    .bss.x              main.o
+    0x20000692   0x0800881c   0x00000002   PAD
+    0x20000694        -       0x00000004   Zero   RW           52    .bss.xg             main.o
+    0x20000698        -       0x00000002   Zero   RW           50    .bss.y              main.o
+    0x2000069a   0x0800881c   0x00000002   PAD
+    0x2000069c        -       0x00000004   Zero   RW           53    .bss.yg             main.o
+    0x200006a0        -       0x00000002   Zero   RW           51    .bss.z              main.o
+    0x200006a2   0x0800881c   0x00000002   PAD
+    0x200006a4        -       0x00000004   Zero   RW           54    .bss.zg             main.o
+    0x200006a8        -       0x00000200   Zero   RW            2    HEAP                startup_stm32l073xx.o
+    0x200008a8        -       0x00000400   Zero   RW            1    STACK               startup_stm32l073xx.o
 
 
 ==============================================================================
@@ -3975,7 +3975,7 @@ Image component sizes
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
          0          0       3420          8          0        902   fonts.o
-      1756        208         95          0        519      12018   main.o
+      1756        208         97          0        539      12018   main.o
       1240         12          0          0       1030       6115   ssd1306.o
         56         26        192          0       1536        644   startup_stm32l073xx.o
        272         28          0          5          4       6657   stm32l0xx_hal.o
@@ -3993,9 +3993,9 @@ Image component sizes
          2          0         33          4          0       1936   system_stm32l0xx.o
 
     ----------------------------------------------------------------------
-     16208        870       3772         20       3108     181136   Object Totals
+     16208        870       3776         20       3124     181136   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-        16          0          0          3         19          0   (incl. Padding)
+        16          0          2          3         15          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -4127,15 +4127,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     30148       1436       4672         20       3204     183936   Grand Totals
-     30148       1436       4672         20       3204     183936   ELF Image Totals
-     30148       1436       4672         20          0          0   ROM Totals
+     30148       1436       4676         20       3220     183936   Grand Totals
+     30148       1436       4676         20       3220     183936   ELF Image Totals
+     30148       1436       4676         20          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                34820 (  34.00kB)
-    Total RW  Size (RW Data + ZI Data)              3224 (   3.15kB)
-    Total ROM Size (Code + RO Data + RW Data)      34840 (  34.02kB)
+    Total RO  Size (Code + RO Data)                34824 (  34.01kB)
+    Total RW  Size (RW Data + ZI Data)              3240 (   3.16kB)
+    Total ROM Size (Code + RO Data + RW Data)      34844 (  34.03kB)
 
 ==============================================================================
 

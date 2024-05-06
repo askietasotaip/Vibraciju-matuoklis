@@ -86,7 +86,7 @@ static void MX_TIM6_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint8_t TxBuffer[40];
+uint8_t TxBuffer[60];
 int cnt=0;
 int sample_no=0;
 void adxl_write (uint8_t reg, uint8_t value)
@@ -188,7 +188,7 @@ void DisplayInfo()
 
 void SendToPC()
 {
-	sprintf((char*) TxBuffer, " x = %.3f g \t y = %.3f \t z = %.3f", xg, yg, zg);
+	sprintf((char*) TxBuffer, "\n x = %.3f g \t y = %.3f \t z = %.3f ", xg, yg, zg);
 	HAL_UART_Transmit(&huart4, TxBuffer, sizeof(TxBuffer), 100);
 }
 
