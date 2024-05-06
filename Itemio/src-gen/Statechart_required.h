@@ -19,6 +19,7 @@ This state machine makes use of operations declared in the state machines interf
 - statechart_saveI2CSample
 - statechart_processData
 - statechart_displayInfo
+- statechart_sendToPC
 are defined.
 
 These functions will be called during a 'run to completion step' (runCycle) of the statechart. 
@@ -31,6 +32,7 @@ extern void statechart_readI2CSensor( Statechart* handle);
 extern sc_integer statechart_saveI2CSample( Statechart* handle, const sc_integer sample_no);
 extern void statechart_processData( Statechart* handle);
 extern void statechart_displayInfo( Statechart* handle);
+extern void statechart_sendToPC( Statechart* handle);
 
 
 

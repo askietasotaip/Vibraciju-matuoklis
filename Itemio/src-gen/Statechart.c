@@ -258,6 +258,7 @@ static void enact_main_region_ReadI2C(Statechart* handle)
 	/* Entry action for state 'ReadI2C'. */
 	statechart_readI2CSensor(handle);
 	statechart_saveI2CSample(handle,handle->internal.sample_no);
+	statechart_sendToPC(handle);
 	handle->completed = bool_true;
 }
 

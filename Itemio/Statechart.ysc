@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:sgraph="http://www.yakindu.org/sct/sgraph/2.0.0">
-  <sgraph:Statechart xmi:id="_8DSNcAhwEe-eLuJ0004gBQ" specification="// Use the event driven execution model.&#xA;// Switch to cycle based behavior&#xA;// by specifying '@CycleBased(200)'.&#xA;@EventDriven&#xA;&#xA;// Use @SuperSteps(yes) to enable&#xA;// super step semantics.&#xA;@SuperSteps(no)&#xD;&#xA;&#xA;&#xA;interface:&#xA;&#x9;// Define events and variables here. &#xA;&#x9;// Use CTRL + Space for content assist.&#xA;&#x9;in event GetSample&#xA;&#x9;&#xA;&#x9;operation ReadI2CSensor()&#xA;&#x9;operation SaveI2CSample(sample_no:integer):integer&#xA;&#x9;operation ProcessData()&#xA;&#x9;operation DisplayInfo()&#xA;&#x9;&#xA;internal:&#xA;&#x9;var sample_no:integer=0" name="Statechart">
+  <sgraph:Statechart xmi:id="_8DSNcAhwEe-eLuJ0004gBQ" specification="// Use the event driven execution model.&#xA;// Switch to cycle based behavior&#xA;// by specifying '@CycleBased(200)'.&#xA;@EventDriven&#xA;&#xA;// Use @SuperSteps(yes) to enable&#xA;// super step semantics.&#xA;@SuperSteps(no)&#xD;&#xA;&#xA;&#xA;interface:&#xA;&#x9;// Define events and variables here. &#xA;&#x9;// Use CTRL + Space for content assist.&#xA;&#x9;in event GetSample&#xA;&#x9;&#xA;&#x9;operation ReadI2CSensor()&#xA;&#x9;operation SaveI2CSample(sample_no:integer):integer&#xA;&#x9;operation ProcessData()&#xA;&#x9;operation DisplayInfo()&#xA;&#x9;operation SendToPC()&#xA;&#x9;&#xA;internal:&#xA;&#x9;var sample_no:integer=0" name="Statechart">
     <regions xmi:id="_8DXF8whwEe-eLuJ0004gBQ" name="main region">
       <vertices xsi:type="sgraph:Entry" xmi:id="_BvsWoAhxEe-eLuJ0004gBQ">
         <outgoingTransitions xmi:id="_BvsWoQhxEe-eLuJ0004gBQ" specification="" target="_BvuL0AhxEe-eLuJ0004gBQ"/>
@@ -8,7 +8,7 @@
       <vertices xsi:type="sgraph:State" xmi:id="_BvuL0AhxEe-eLuJ0004gBQ" name="WaitSamplePeriod" incomingTransitions="_BvsWoQhxEe-eLuJ0004gBQ _Bv7AIAhxEe-eLuJ0004gBQ _Bv381QhxEe-eLuJ0004gBQ">
         <outgoingTransitions xmi:id="_Bvuy4QhxEe-eLuJ0004gBQ" specification="GetSample" target="_BvwoEAhxEe-eLuJ0004gBQ"/>
       </vertices>
-      <vertices xsi:type="sgraph:State" xmi:id="_BvwoEAhxEe-eLuJ0004gBQ" specification="entry / ReadI2CSensor();&#xD;&#xA;SaveI2CSample(sample_no)&#xD;&#xA;exit / sample_no=sample_no+1" name="ReadI2C" incomingTransitions="_Bvuy4QhxEe-eLuJ0004gBQ">
+      <vertices xsi:type="sgraph:State" xmi:id="_BvwoEAhxEe-eLuJ0004gBQ" specification="entry / ReadI2CSensor();&#xD;&#xA;SaveI2CSample(sample_no);&#xD;&#xA;SendToPC()&#xD;&#xA;exit / sample_no=sample_no+1" name="ReadI2C" incomingTransitions="_Bvuy4QhxEe-eLuJ0004gBQ">
         <outgoingTransitions xmi:id="_BvzEUQhxEe-eLuJ0004gBQ" specification="" target="_Bv5K8AhxEe-eLuJ0004gBQ"/>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="_Bv05gAhxEe-eLuJ0004gBQ" specification="entry / ProcessData();&#xD;&#xA;DisplayInfo()&#xD;&#xA;exit / sample_no = 0" name="DisplayData" incomingTransitions="_Bv5K8QhxEe-eLuJ0004gBQ">
@@ -70,7 +70,7 @@
           <styles xsi:type="notation:ShapeStyle" xmi:id="_Bvp6aAhxEe-eLuJ0004gBQ" fontName="Verdana" fillColor="15720400" lineColor="12632256"/>
           <styles xsi:type="notation:FontStyle" xmi:id="_Bvp6aQhxEe-eLuJ0004gBQ"/>
           <styles xsi:type="notation:BooleanValueStyle" xmi:id="_Bvp6aghxEe-eLuJ0004gBQ" name="isHorizontal" booleanValue="true"/>
-          <layoutConstraint xsi:type="notation:Bounds" xmi:id="_Bvp6awhxEe-eLuJ0004gBQ" x="51" y="201" width="226" height="72"/>
+          <layoutConstraint xsi:type="notation:Bounds" xmi:id="_Bvp6awhxEe-eLuJ0004gBQ" x="51" y="201" width="226" height="86"/>
         </children>
         <children xmi:id="_BvrIgAhxEe-eLuJ0004gBQ" type="State" element="_Bv05gAhxEe-eLuJ0004gBQ">
           <children xsi:type="notation:DecorationNode" xmi:id="_BvrIgQhxEe-eLuJ0004gBQ" type="StateName">
@@ -125,18 +125,18 @@
       </children>
       <styles xsi:type="notation:ConnectorStyle" xmi:id="_BwAftAhxEe-eLuJ0004gBQ" routing="Rectilinear" lineColor="4210752"/>
       <styles xsi:type="notation:FontStyle" xmi:id="_BwAftQhxEe-eLuJ0004gBQ" fontName="Verdana"/>
-      <bendpoints xsi:type="notation:RelativeBendpoints" xmi:id="_BwAftghxEe-eLuJ0004gBQ" points="[2, 3, -1, -77]$[2, 64, -1, -16]"/>
+      <bendpoints xsi:type="notation:RelativeBendpoints" xmi:id="_BwAftghxEe-eLuJ0004gBQ" points="[2, 3, -1, -80]$[2, 64, -1, -19]"/>
       <sourceAnchor xsi:type="notation:IdentityAnchor" xmi:id="_BwAftwhxEe-eLuJ0004gBQ" id="(0.09655172413793103,0.9454545454545454)"/>
       <targetAnchor xsi:type="notation:IdentityAnchor" xmi:id="_BwAfuAhxEe-eLuJ0004gBQ" id="(0.07881773399014778,0.22413793103448276)"/>
     </edges>
     <edges xmi:id="_BwBGwAhxEe-eLuJ0004gBQ" type="Transition" element="_BvzEUQhxEe-eLuJ0004gBQ" source="_Bvp6YAhxEe-eLuJ0004gBQ" target="_BvrvkAhxEe-eLuJ0004gBQ">
       <children xsi:type="notation:DecorationNode" xmi:id="_BwBGwQhxEe-eLuJ0004gBQ" type="TransitionExpression">
         <styles xsi:type="notation:ShapeStyle" xmi:id="_BwBGwghxEe-eLuJ0004gBQ"/>
-        <layoutConstraint xsi:type="notation:Location" xmi:id="_BwBGwwhxEe-eLuJ0004gBQ" x="-7" y="-98"/>
+        <layoutConstraint xsi:type="notation:Location" xmi:id="_BwBGwwhxEe-eLuJ0004gBQ" x="-14" y="-98"/>
       </children>
       <styles xsi:type="notation:ConnectorStyle" xmi:id="_BwBGxAhxEe-eLuJ0004gBQ" routing="Rectilinear" lineColor="4210752"/>
       <styles xsi:type="notation:FontStyle" xmi:id="_BwBGxQhxEe-eLuJ0004gBQ" fontName="Verdana"/>
-      <bendpoints xsi:type="notation:RelativeBendpoints" xmi:id="_BwBGxghxEe-eLuJ0004gBQ" points="[3, 7, 0, -53]$[3, 56, 0, -4]"/>
+      <bendpoints xsi:type="notation:RelativeBendpoints" xmi:id="_BwBGxghxEe-eLuJ0004gBQ" points="[3, 8, 0, -39]$[3, 43, 0, -4]"/>
       <sourceAnchor xsi:type="notation:IdentityAnchor" xmi:id="_BwBGxwhxEe-eLuJ0004gBQ" id="(0.054187192118226604,0.9137931034482759)"/>
       <targetAnchor xsi:type="notation:IdentityAnchor" xmi:id="_BwBGyAhxEe-eLuJ0004gBQ" id="(0.4666666666666667,0.2)"/>
     </edges>
